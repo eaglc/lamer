@@ -10,7 +10,7 @@ import (
 type Options struct {
     Codec codec.NewCodec
     Registry registry.Registry
-    Transport transport.Transport
+    Transport []transport.Transport
     Name string
     Id string
     Version string
@@ -32,7 +32,7 @@ func Registry(r registry.Registry) Option {
     }
 }
 
-func Transport(t transport.Transport) Option {
+func Transport(t ...transport.Transport) Option {
     return func(o *Options) {
         o.Transport = t
     }
