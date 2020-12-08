@@ -2,7 +2,6 @@ package server
 
 import (
     "github.com/eaglc/lamer/router"
-    "github.com/eaglc/lamer/transport"
 )
 
 type Server interface {
@@ -10,7 +9,12 @@ type Server interface {
     Options() Options
     Start() error
     Stop() error
+
+    // A server contains multiple transports
+    // A router is bound to one or more transports
+    // A server can contain multiple routers
+    Router(t string) router.Router
+    DefaultRouter() router.Router
+
     String() string
-    // A server contains multiple transports, and each transport is bound to a router
-    Router(t transport.Type) router.Router
 }

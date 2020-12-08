@@ -9,8 +9,13 @@ type App interface {
     Init(...Option)
     Options() Options
     Name() string
-    Client() client.Client
+
+    // a App can contains multiple clients
+    Client(string) client.Client
+
+    // a App contain only one server
     Server() server.Server
+
     Run() error
     String() string
 }

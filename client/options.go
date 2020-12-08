@@ -4,6 +4,7 @@ import (
     "context"
     "github.com/eaglc/lamer/codec"
     "github.com/eaglc/lamer/registry"
+    "github.com/eaglc/lamer/router"
     "github.com/eaglc/lamer/selector"
     "github.com/eaglc/lamer/transport"
 )
@@ -13,6 +14,7 @@ type Options struct {
     Registry registry.Registry
     Selector selector.Selector
     Transport transport.Transport
+    Router router.Router
 
     Context context.Context
 }
@@ -46,5 +48,11 @@ func Transport(t transport.Transport) Option {
 func Context(ctx context.Context) Option {
     return func(o *Options) {
         o.Context = ctx
+    }
+}
+
+func Router(r router.Router) Option {
+    return func(o *Options) {
+        o.Router = r
     }
 }

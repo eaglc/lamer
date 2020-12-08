@@ -4,6 +4,7 @@ import "github.com/eaglc/lamer/handler"
 
 type Router interface {
     Handle(pattern interface{}, handler handler.Handler)
+    String() string
 }
 
 //func Handle(pattern string, h handler.Handler)  {
