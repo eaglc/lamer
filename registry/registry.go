@@ -5,30 +5,24 @@ type Registry interface {
     Options() Options
     Register(Node) error
     Deregister(Node) error
-    GetNodes(string) ([]Node, error)
+    GetNodes(Key) ([]Node, error)
 
     // TODO watcher
-    //
 
     String() string
 }
 
 type Node interface {
-    // TODO
+    Key
+    Data
 }
 
-type Marshaler interface {
-    MarshalJNode() ([]byte, error)
+type Key interface {
+    MarshalKey() ([]byte, error)
+    UnmarshalKey() ([]byte, error)
 }
 
-type Unmarshaler interface {
-    UnmarshalNode([] byte) error
-}
-
-func Marshal(v interface{}) ([]byte, error) {
-    return nil,nil
-}
-
-func Unmarshal(data []byte, v interface{}) error  {
-    return nil
+type Data interface {
+    MarshalData() ([]byte, error)
+    UnmarshalData() ([]byte, error)
 }

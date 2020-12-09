@@ -10,11 +10,11 @@ import (
 )
 
 type Options struct {
-    Codec codec.NewCodec
-    Registry registry.Registry
-    Selector selector.Selector
+    Codec     codec.NewCodec
+    Registry  registry.Registry
+    Selector  selector.Selector
     Transport transport.Transport
-    Router router.Router
+    Router    router.Router
 
     Context context.Context
 }

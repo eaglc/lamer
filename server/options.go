@@ -19,7 +19,7 @@ type Options struct {
     Router router.Router
 
     // Router map
-    BindRouter map[string] router.Router
+    BindRouter map[string]router.Router
 
     // default Codec
     Codec codec.NewCodec
@@ -98,7 +98,7 @@ func Router(r router.Router) Option {
 func BindRouter(t transport.Transport, r router.Router) Option {
     return func(o *Options) {
         if o.BindRouter == nil {
-            o.BindRouter = make(map[string] router.Router)
+            o.BindRouter = make(map[string]router.Router)
         }
         if o.Transports == nil {
             o.Transports = make(map[string] transport.Transport)
@@ -132,7 +132,7 @@ func BindRouterCodec(t transport.Transport, r router.Router, c codec.NewCodec) O
             o.Transports = make(map[string] transport.Transport)
         }
         if o.BindRouter == nil {
-            o.BindRouter = make(map[string] router.Router)
+            o.BindRouter = make(map[string]router.Router)
         }
 
         o.Transports[t.String()] = t
