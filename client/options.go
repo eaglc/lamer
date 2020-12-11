@@ -10,11 +10,14 @@ import (
 )
 
 type Options struct {
+    Addrs []string
     Codec     codec.NewCodec
     Registry  registry.Registry
     Selector  selector.Selector
     Transport transport.Transport
     Router    router.Router
+
+    DirectMode bool
 
     Context context.Context
 }
@@ -54,5 +57,12 @@ func Context(ctx context.Context) Option {
 func Router(r router.Router) Option {
     return func(o *Options) {
         o.Router = r
+    }
+}
+
+func Addrs(addrs []string) Option {
+    return func(o *Options) {
+        o.Addrs = addrs
+        o.DirectMode = true
     }
 }

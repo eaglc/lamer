@@ -8,6 +8,9 @@ type Client interface {
     Init(...Option) error
     Options() Options
     Router() router.Router
+    Name() string
     String() string
+    Start() error
+    Stop() error
 }
 

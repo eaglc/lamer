@@ -19,13 +19,22 @@ type Options struct {
     Router router.Router
 
     // Router map
+    // key: Transport.String()
+    // val: Router
     BindRouter map[string]router.Router
 
     // default Codec
     Codec codec.NewCodec
 
     // Codec map
+    // key: Transport.String()
+    // val: codec.NewCodec
     BindCodec map[string] codec.NewCodec
+
+    // Addrs map
+    // key: Transport.String()
+    // val: []string
+    BindAddrs map[string][]string
 
     // server name
     Name string
@@ -123,6 +132,20 @@ func BindCodec(t transport.Transport, c codec.NewCodec) Option {
     }
 }
 
+func BindAddrs(t transport.Transport, addrs []string) Option {
+    return func(o *Options) {
+        if o.BindAddrs == nil {
+            o.BindAddrs = make(map[string] []string)
+        }
+        if o.Transports == nil {
+            o.Transports = make(map[string] transport.Transport)
+        }
+
+        o.BindAddrs[t.String()] = addrs
+        o.Transports[t.String()] = t
+    }
+}
+
 func BindRouterCodec(t transport.Transport, r router.Router, c codec.NewCodec) Option {
     return func(o *Options) {
         if o.BindCodec == nil {
@@ -138,5 +161,27 @@ func BindRouterCodec(t transport.Transport, r router.Router, c codec.NewCodec) O
         o.Transports[t.String()] = t
         o.BindRouter[t.String()] = r
         o.BindCodec[t.String()] = c
+    }
+}
+
+func Bind(t transport.Transport, r router.Router, c codec.NewCodec, addrs []string) Option {
+    return func(o *Options) {
+        if o.BindCodec == nil {
+            o.BindCodec = make(map[string] codec.NewCodec)
+        }
+        if o.Transports == nil {
+            o.Transports = make(map[string] transport.Transport)
+        }
+        if o.BindRouter == nil {
+            o.BindRouter = make(map[string]router.Router)
+        }
+        if o.BindAddrs == nil {
+            o.BindAddrs = make(map[string] []string)
+        }
+
+        o.Transports[t.String()] = t
+        o.BindRouter[t.String()] = r
+        o.BindCodec[t.String()] = c
+        o.BindAddrs[t.String()] = addrs
     }
 }

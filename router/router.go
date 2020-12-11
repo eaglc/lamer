@@ -3,6 +3,7 @@ package router
 import "github.com/eaglc/lamer/handler"
 
 type Router interface {
+    handler.Handler
     Handle(pattern interface{}, handler handler.Handler)
     String() string
 }

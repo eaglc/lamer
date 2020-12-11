@@ -18,5 +18,5 @@ type Encoder interface {
 }
 
 type Decoder interface {
-    Decode(interface{}) error
+    Decode() (interface{}, error)
 }
