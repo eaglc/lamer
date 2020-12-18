@@ -19,7 +19,14 @@ type Options struct {
 
     DirectMode bool
 
+    Name string
+    Endpoints []string
+
     Context context.Context
+}
+
+type PoolOptions struct {
+
 }
 
 type Option func(*Options)
@@ -64,5 +71,17 @@ func Addrs(addrs []string) Option {
     return func(o *Options) {
         o.Addrs = addrs
         o.DirectMode = true
+    }
+}
+
+func Name(name string) Option {
+    return func(o *Options) {
+        o.Name = name
+    }
+}
+
+func Endpoint(eds []string) Option {
+    return func(o *Options) {
+        o.Endpoints = eds
     }
 }

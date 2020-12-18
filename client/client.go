@@ -5,7 +5,7 @@ import (
 )
 
 type Client interface {
-    Init(...Option) error
+    Init(...Option)
     Options() Options
     Router() router.Router
     Name() string

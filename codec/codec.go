@@ -9,6 +9,7 @@ type NewCodec func(closer io.ReadWriteCloser) Codec
 type Codec interface {
     Encoder
     Decoder
+    Write(interface{}) error
     Close() error
     String() string
 }
@@ -18,5 +19,5 @@ type Encoder interface {
 }
 
 type Decoder interface {
-    Decode() (interface{}, error)
+    Decode(interface{}) error
 }
