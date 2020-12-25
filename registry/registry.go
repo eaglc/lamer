@@ -4,6 +4,10 @@ import (
     "context"
 )
 
+type Getter interface {
+    GetNodes(string) ([]Node, error)
+}
+
 type Watcher interface {
     Create(Node)
     Update(Node)
@@ -13,12 +17,11 @@ type Watcher interface {
 type NewWatcher func(context.Context) Watcher
 
 type Registry interface {
+    Getter
     Init(...Option)
     Options() Options
-    Register(Node) error
+    Register(Node, ...RegisterOption) error
     Deregister(Node) error
-    GetNodes(string) ([]Node, error)
-
     // TODO watcher
     // You can have different watcher to handle event for different key
     Watch(context.Context, string, NewWatcher) error
@@ -30,5 +33,7 @@ type Node interface {
     MarshalKey() ([]byte, error)
     MarshalNode() ([]byte, error)
     UnmarshalNode([]byte) error
-    Addr() string
+
+    // param: transport
+    Addrs(string) []string
 }

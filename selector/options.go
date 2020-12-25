@@ -6,7 +6,8 @@ import (
 )
 
 type Options struct {
-    Registry registry.Registry
+    Getter registry.Getter
+    Filters []Filter
     Strategies []Strategy
 
     ctx context.Context
@@ -20,8 +21,14 @@ func Strategies(s ...Strategy) Option {
     }
 }
 
-func Registry(r registry.Registry) Option {
+func Filters(f ...Filter) Option {
     return func(o *Options) {
-        o.Registry = r
+        o.Filters = f
+    }
+}
+
+func Getter(r registry.Getter) Option {
+    return func(o *Options) {
+        o.Getter = r
     }
 }

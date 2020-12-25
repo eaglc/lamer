@@ -55,7 +55,7 @@ func (a *app) Client(n string) client.Client {
     return nil
 }
 
-func (a *app) Server(n string) server.Server {
+func (a *app) Server() server.Server {
     return a.opts.Server
 }
 
@@ -79,8 +79,13 @@ func (a *app) Run() error {
 
     // block here to wait end
     select {
-    case <-sch:
+    case s := <-sch:
     case <-a.opts.Context.Done():
+    }
+
+    a.opts.Server.Stop()
+    for i := range a.opts.Clients {
+        a.opts.Clients[i].Stop()
     }
 
     return nil
@@ -91,8 +96,15 @@ func (a *app) String() string {
 }
 
 func NewApp(opts ...Option) App {
-    return nil
+    var options Options
+    for _, o := range opts {
+        o(&options)
+    }
+    return &app{
+        opts:options,
+    }
 }
+
 
 
 

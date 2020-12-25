@@ -7,8 +7,7 @@ import (
 type NewCodec func(closer io.ReadWriteCloser) Codec
 
 type Codec interface {
-    Encoder
-    Decoder
+    Read(interface{}) error
     Write(interface{}) error
     Close() error
     String() string

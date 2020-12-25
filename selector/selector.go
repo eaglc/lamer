@@ -8,7 +8,7 @@ type Selector interface {
     Select(string) (Next, error)
 
     // Mark a node error/success
-    Mark(string, node registry.Node, err error)
+    Mark(string, registry.Node, error)
     String() string
 }
 

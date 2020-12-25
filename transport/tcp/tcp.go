@@ -123,3 +123,14 @@ func (l *tcpListener) Close() error {
 func (l *tcpListener) Addr() string {
     return l.l.Addr().String()
 }
+
+func NewTransport(opts ...transport.Option) transport.Transport {
+    var options transport.Options
+    for _, o := range opts {
+        o(&options)
+    }
+
+    return &tcpTransport{
+        opts:options,
+    }
+}

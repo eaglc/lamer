@@ -14,7 +14,13 @@ type Options struct {
     Context context.Context
 }
 
+type RegisterOptions struct {
+    TTL time.Duration
+}
+
 type Option func(*Options)
+
+type RegisterOption func(* RegisterOptions)
 
 func Addrs(addrs ...string) Option {
     return func(o *Options) {
@@ -31,5 +37,17 @@ func Timeout(timeout time.Duration) Option {
 func TLSConfig(t *tls.Config) Option {
     return func(o *Options) {
         o.TLSConfig = t
+    }
+}
+
+func RegisterTTL(ttl time.Duration) RegisterOption {
+    return func(o *RegisterOptions) {
+        o.TTL = ttl
+    }
+}
+
+func Context(ctx context.Context) Option {
+    return func(o *Options) {
+        o.Context = ctx
     }
 }
