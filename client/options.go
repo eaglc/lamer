@@ -6,6 +6,7 @@ import (
     "github.com/eaglc/lamer/registry"
     "github.com/eaglc/lamer/router"
     "github.com/eaglc/lamer/selector"
+    "github.com/eaglc/lamer/session"
     "github.com/eaglc/lamer/transport"
 )
 
@@ -16,6 +17,8 @@ type Options struct {
     Selector  selector.Selector
     Transport transport.Transport
     Router    router.Router
+    Callbacks []session.Callback
+    Cache session.Cache
 
     DirectMode bool
 
@@ -83,5 +86,17 @@ func Name(name string) Option {
 func Endpoint(eds []string) Option {
     return func(o *Options) {
         o.Endpoints = eds
+    }
+}
+
+func Callbacks(cbs ...session.Callback) Option {
+    return func(o *Options) {
+        o.Callbacks = cbs
+    }
+}
+
+func Cache(cache session.Cache) Option {
+    return func(o *Options) {
+        o.Cache = cache
     }
 }

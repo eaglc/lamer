@@ -1,5 +1,5 @@
 package letter
 
-type Response interface {
-
+type ResponseWriter interface {
+    Write(m interface{}) error
 }

@@ -9,12 +9,6 @@ type Server interface {
     Options() Options
     Start() error
     Stop() error
-
-    // A server contains multiple transports
-    // A router is bound to one or more transports
-    // A server can contain multiple routers
-    Router(t string) router.Router
-    DefaultRouter() router.Router
-
+    Router() router.Router
     String() string
 }

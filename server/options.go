@@ -5,36 +5,31 @@ import (
     "github.com/eaglc/lamer/codec"
     "github.com/eaglc/lamer/registry"
     "github.com/eaglc/lamer/router"
+    "github.com/eaglc/lamer/session"
     "github.com/eaglc/lamer/transport"
 )
 
 type Options struct {
-    // registry
+    // session callback
+    Callbacks []session.Callback
+
+    // session cache
+    Cache session.Cache
+
+    // Registry
     Registry registry.Registry
 
-    // we can have multiple transports
-    Transports map[string] transport.Transport
+    // Transport
+    Transport transport.Transport
 
-    // default Router
+    // Router
     Router router.Router
 
-    // Router map
-    // key: Transport.String()
-    // val: Router
-    BindRouter map[string]router.Router
-
-    // default Codec
+    // Codec
     Codec codec.NewCodec
 
-    // Codec map
-    // key: Transport.String()
-    // val: codec.NewCodec
-    BindCodec map[string] codec.NewCodec
-
-    // Addrs map
-    // key: Transport.String()
-    // val: []string
-    BindAddrs map[string][]string
+    // Address to listen
+    Addr string
 
     // server name
     Name string
@@ -63,14 +58,9 @@ func Registry(r registry.Registry) Option {
     }
 }
 
-func Transport(t ...transport.Transport) Option {
+func Transport(t transport.Transport) Option {
     return func(o *Options) {
-        if o.Transports == nil {
-            o.Transports = make(map[string] transport.Transport)
-        }
-        for i := range t {
-            o.Transports[t[i].String()] = t[i]
-        }
+        o.Transport = t
     }
 }
 
@@ -104,84 +94,20 @@ func Router(r router.Router) Option {
     }
 }
 
-func BindRouter(t transport.Transport, r router.Router) Option {
+func Addr(addr string) Option {
     return func(o *Options) {
-        if o.BindRouter == nil {
-            o.BindRouter = make(map[string]router.Router)
-        }
-        if o.Transports == nil {
-            o.Transports = make(map[string] transport.Transport)
-        }
-
-        o.BindRouter[t.String()] = r
-        o.Transports[t.String()] = t
+        o.Addr = addr
     }
 }
 
-func BindCodec(t transport.Transport, c codec.NewCodec) Option {
+func Callbacks(cbs ...session.Callback) Option {
     return func(o *Options) {
-        if o.BindCodec == nil {
-            o.BindCodec = make(map[string] codec.NewCodec)
-        }
-        if o.Transports == nil {
-            o.Transports = make(map[string] transport.Transport)
-        }
-
-        o.BindCodec[t.String()] = c
-        o.Transports[t.String()] = t
+        o.Callbacks = cbs
     }
 }
 
-func BindAddrs(t transport.Transport, addrs []string) Option {
+func Cache(cache session.Cache) Option {
     return func(o *Options) {
-        if o.BindAddrs == nil {
-            o.BindAddrs = make(map[string] []string)
-        }
-        if o.Transports == nil {
-            o.Transports = make(map[string] transport.Transport)
-        }
-
-        o.BindAddrs[t.String()] = addrs
-        o.Transports[t.String()] = t
-    }
-}
-
-func BindRouterCodec(t transport.Transport, r router.Router, c codec.NewCodec) Option {
-    return func(o *Options) {
-        if o.BindCodec == nil {
-            o.BindCodec = make(map[string] codec.NewCodec)
-        }
-        if o.Transports == nil {
-            o.Transports = make(map[string] transport.Transport)
-        }
-        if o.BindRouter == nil {
-            o.BindRouter = make(map[string]router.Router)
-        }
-
-        o.Transports[t.String()] = t
-        o.BindRouter[t.String()] = r
-        o.BindCodec[t.String()] = c
-    }
-}
-
-func Bind(t transport.Transport, r router.Router, c codec.NewCodec, addrs []string) Option {
-    return func(o *Options) {
-        if o.BindCodec == nil {
-            o.BindCodec = make(map[string] codec.NewCodec)
-        }
-        if o.Transports == nil {
-            o.Transports = make(map[string] transport.Transport)
-        }
-        if o.BindRouter == nil {
-            o.BindRouter = make(map[string]router.Router)
-        }
-        if o.BindAddrs == nil {
-            o.BindAddrs = make(map[string] []string)
-        }
-
-        o.Transports[t.String()] = t
-        o.BindRouter[t.String()] = r
-        o.BindCodec[t.String()] = c
-        o.BindAddrs[t.String()] = addrs
+        o.Cache = cache
     }
 }

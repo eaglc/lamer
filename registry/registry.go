@@ -34,6 +34,5 @@ type Node interface {
     MarshalNode() ([]byte, error)
     UnmarshalNode([]byte) error
 
-    // param: transport
-    Addrs(string) []string
+    Addr() string
 }

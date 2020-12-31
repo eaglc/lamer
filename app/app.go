@@ -79,7 +79,7 @@ func (a *app) Run() error {
 
     // block here to wait end
     select {
-    case s := <-sch:
+    case <-sch:
     case <-a.opts.Context.Done():
     }
 
