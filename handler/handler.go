@@ -1,6 +1,8 @@
 package handler
 
-import "context"
+import (
+    "context"
+)
 
 type Handler interface {
     Serve(ctx context.Context, request interface{}, replay interface{}) error
