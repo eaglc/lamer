@@ -6,9 +6,10 @@ type Selector interface {
     Init(...Option)
     Options() Options
     Select(string) (Next, error)
+    SelectA(string) (registry.Node, error)
 
     // Mark a node error/success
-    Mark(string, registry.Node, error)
+    Mark(registry.Node, error)
     String() string
 }
 
