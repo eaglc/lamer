@@ -10,6 +10,8 @@ type Options struct {
     Addrs []string
     Timeout time.Duration
     TLSConfig *tls.Config
+    Encode Marshaler
+    Decode Unmarshaler
 
     Context context.Context
 }
@@ -49,5 +51,17 @@ func RegisterTTL(ttl time.Duration) RegisterOption {
 func Context(ctx context.Context) Option {
     return func(o *Options) {
         o.Context = ctx
+    }
+}
+
+func Encoder(marshal Marshaler) Option {
+    return func(o *Options) {
+        o.Encode = marshal
+    }
+}
+
+func Decoder(unmarshal Unmarshaler) Option {
+    return func(o *Options) {
+        o.Decode = unmarshal
     }
 }
