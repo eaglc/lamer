@@ -1,6 +1,12 @@
 package letter
 
 type Request interface {
-    Header() map[string]string
     Body() interface{}
+
+    // addr or other. defined by yourself
+    Endpoint() string
+    // endpoint name
+    Name() string
+    // endpoint id
+    Id() string
 }
