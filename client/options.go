@@ -20,6 +20,8 @@ type Options struct {
     Callbacks []session.Callback
     Cache session.Cache
 
+    Nodes []registry.Node
+
     DirectMode bool
 
     Name string
@@ -98,5 +100,11 @@ func Callbacks(cbs ...session.Callback) Option {
 func Cache(cache session.Cache) Option {
     return func(o *Options) {
         o.Cache = cache
+    }
+}
+
+func Nodes(nodes ...registry.Node) Option {
+    return func(o *Options) {
+        o.Nodes = nodes
     }
 }
