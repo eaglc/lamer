@@ -72,7 +72,7 @@ func Router(r router.Router) Option {
     }
 }
 
-func Addrs(addrs []string) Option {
+func Addrs(addrs ...string) Option {
     return func(o *Options) {
         o.Addrs = addrs
         o.DirectMode = true
@@ -85,7 +85,7 @@ func Name(name string) Option {
     }
 }
 
-func Endpoint(eds []string) Option {
+func Endpoint(eds ...string) Option {
     return func(o *Options) {
         o.Endpoints = eds
     }
