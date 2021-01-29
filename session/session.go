@@ -1,6 +1,8 @@
 package session
 
-import "github.com/eaglc/lamer/codec"
+import (
+    "github.com/eaglc/lamer/codec"
+)
 
 type State int32
 
@@ -21,6 +23,10 @@ type Session interface {
     // error of this session
     Error() error
     SetError(error)
+
+    // last active time
+    SetLastActiveTime(int)
+    LastActiveTime() int
 
     Close() error
 }
