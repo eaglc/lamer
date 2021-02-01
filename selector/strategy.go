@@ -5,6 +5,8 @@ import (
 )
 
 type Strategy interface {
-    Do(string, [] registry.Node) Next
-    DoA(string, [] registry.Node) registry.Node
+    Do(string, ...SelectOption) Next
+    DoA(string, ...SelectOption) registry.Node
+    Mark(registry.Node, error)
+    String() string
 }

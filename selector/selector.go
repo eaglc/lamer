@@ -5,8 +5,8 @@ import "github.com/eaglc/lamer/registry"
 type Selector interface {
     Init(...Option)
     Options() Options
-    Select(string) (Next, error)
-    SelectA(string) (registry.Node, error)
+    Select(string, ...SelectOption) (Next, error)
+    SelectA(string, ...SelectOption) (registry.Node, error)
 
     // Mark a node error/success
     Mark(registry.Node, error)
