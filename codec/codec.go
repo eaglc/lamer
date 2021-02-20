@@ -1,22 +1,22 @@
 package codec
 
 import (
-    "io"
+	"io"
 )
 
 type NewCodec func(closer io.ReadWriteCloser) Codec
 
 type Codec interface {
-    Read(interface{}) error
-    Write(interface{}) error
-    Close() error
-    String() string
+	Read(interface{}, ...Option) error
+	Write(interface{}, ...Option) error
+	Close() error
+	String() string
 }
 
 type Encoder interface {
-    Encode(interface{}) error
+	Encode(interface{}, ...Option) error
 }
 
 type Decoder interface {
-    Decode(interface{}) error
+	Decode(interface{}, ...Option) error
 }
