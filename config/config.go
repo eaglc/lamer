@@ -17,7 +17,7 @@ type Event struct {
 
 type Center interface {
 	Init(...Option)
-	GetConfig(conf string) Config
+	GetConfig(conf string) (Config, error)
 }
 
 type Config interface {

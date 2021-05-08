@@ -1,32 +1,32 @@
 package session
 
 import (
-    "github.com/eaglc/lamer/codec"
+	"github.com/eaglc/lamer/codec"
 )
 
 type State int32
 
 type Session interface {
-    // codec session use
-    Codec() codec.Codec
-    SetCodec(codec.Codec)
+	// codec session use
+	Codec() codec.Codec
+	SetCodec(codec.Codec)
 
-    // metadata
-    Metadata() interface{}
-    SetMetadata(interface{})
+	// metadata
+	Metadata() interface{}
+	SetMetadata(interface{})
 
-    // state of this session
-    State() State
-    SetState(State)
-    InState(State) bool
+	// state of this session
+	State() State
+	SetState(State)
+	InState(State) bool
 
-    // error of this session
-    Error() error
-    SetError(error)
+	// error of this session
+	Error() error
+	SetError(error)
 
-    // last active time
-    SetLastActiveTime(int)
-    LastActiveTime() int
+	// last active time
+	SetLastActiveTime(int64)
+	LastActiveTime() int64
 
-    Close() error
+	Close() error
 }
